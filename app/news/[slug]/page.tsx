@@ -1,6 +1,7 @@
 import { NewsType } from "@/types/news.type";
 import { DUMMY_NEWS } from "@/utils/dummy-news";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 
 
@@ -11,13 +12,16 @@ export default async function NewsDetailPage({
 }) {
   const { slug } = await params;
 
-  console.log(slug, 'slug');
+
 
   const newsItem: NewsType | undefined = DUMMY_NEWS.find(
     (news) => news.slug === slug
   );
 
-  console.log(newsItem);
+  if (!newsItem) {
+    notFound();
+  }
+
 
   return (
     <article className="news-article">
